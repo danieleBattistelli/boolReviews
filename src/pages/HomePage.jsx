@@ -25,12 +25,12 @@ function HomePage() {
   }, []); // Assicurati che l'array di dipendenze sia vuoto per evitare richiami multipli
 
   // Funzione per ottenere la lista delle recensioni dall'API
-  const getReviews = (page = 1) => {
+  const getReviews = (page = 1, query = "") => {
     if (isLoading) return; // Evita chiamate duplicate
     setIsLoading(true); // Imposta il flag per indicare che i dati stanno per essere caricati
 
     axios
-      .get(`http://127.0.0.1:8000/api/reviews?page=${page}`)
+      .get(`http://127.0.0.1:8000/api/reviews?page=${page}&search=${query}`)
       .then((resp) => {
         const newReviews = resp.data.data.data;
 
@@ -133,7 +133,7 @@ function HomePage() {
         {/* Pulsante per tornare all'inizio, visibile solo dalla seconda pagina */}
         {currentPage > 1 && (
           <div className="text-center mt-4">
-            <button className="btn btn-outline-secondary" onClick={scrollToTop}>
+            <button className="btn btn-outline-success" onClick={scrollToTop}>
               Torna all'inizio
             </button>
           </div>

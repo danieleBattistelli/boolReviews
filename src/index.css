@@ -36,6 +36,17 @@ body {
     border-radius: 5px;
 }
 
+.detail-game-title {
+    margin: 10px;
+    border: 0;
+    color: black;
+    background-color: white;
+    border: 2px solid black;
+    display: inline-block;
+    padding: 5px 5px;
+    border-radius: 5px;
+}
+
 .no-margin-bottom {
     margin-bottom: 0;
 }
@@ -85,4 +96,50 @@ body {
     /* Solleva leggermente la card */
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
     /* Ombra più pronunciata */
+}
+
+.image-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-block;
+}
+
+.image-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.review-section {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.detail-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.w-25 {
+    width: 25%;
 }

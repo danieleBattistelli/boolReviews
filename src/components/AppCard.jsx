@@ -41,7 +41,7 @@ function AppCard({ review, navigate, renderStars }) {
                     <hr />
                     <button
                         className="btn btn-outline-primary"
-                        onClick={() => navigate(`/reviews/${review.id}`)}
+                        onClick={() => navigate(`/api/reviews/${review.id}`)}
                     >
                         Leggi di più
                     </button>
