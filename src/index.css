@@ -10,6 +10,13 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+.navbar {
+    height: 65px;
+    margin: 0;
+    border: 0;
+    /* Altezza fissa della navbar */
+}
+
 .homepage-container {
     position: relative;
     width: 100%;
@@ -17,15 +24,16 @@ body {
     overflow: hidden;
 }
 
-.homepage-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 1;
-    z-index: -1;
+.homepage-title {
+
+    margin: 0;
+    border: 0;
+    color: black;
+    background-color: white;
+    border: 2px solid black;
+    display: inline-block;
+    padding: 5px 5px;
+    border-radius: 5px;
 }
 
 .no-margin-bottom {
@@ -37,15 +45,37 @@ body {
 }
 
 .fixed-size-img {
-
-    height: 500px;
-    object-fit: cover;
-    width: 25%;
+    height: 250px;
+    object-fit: contain;
+    width: 100%;
     margin: 5px 0;
-
 }
 
 .fixed-height-text {
     height: 30px;
     overflow: hidden;
+}
+
+.card {
+    background-color: #ffffff;
+    /* Colore di sfondo bianco */
+    border-radius: 8px;
+    /* Angoli arrotondati */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Ombra leggera */
+    padding: 10px;
+    /* Spaziatura interna */
+    margin: 0 0px 10px 10px;
+    /* Rimosso il margine superiore */
+    transition: transform 0.2s, box-shadow 0.2s;
+    /* Transizione per hover */
+    max-height: 70vh;
+    /* Altezza massima del 75% della finestra */
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    /* Solleva leggermente la card */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    /* Ombra più pronunciata */
 }

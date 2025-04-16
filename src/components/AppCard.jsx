@@ -4,7 +4,7 @@ import { FaStar } from "react-icons/fa"; // Importa l'icona delle stelle
 function AppCard({ review, navigate, renderStars }) {
     return (
         <div className="col-md-4 mb-4">
-            <div className="card h-100">
+            <div className="card h-90">
                 <div className="card-body text-center">
                     <h3 className="card-title fixed-height-title">{review.gametitle}</h3>
                     <img

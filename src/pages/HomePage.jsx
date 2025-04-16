@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaStar } from "react-icons/fa"; 
-import AppCard from "../components/AppCard"; 
+import { FaStar } from "react-icons/fa";
+import AppCard from "../components/AppCard";
 
 function HomePage() {
   // Stato per memorizzare le recensioni ottenute dall'API
@@ -81,10 +81,15 @@ function HomePage() {
     return stars;
   };
 
+  // Funzione per scorrere verso l'alto
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <main>
+    <main className="homepage-main">
       {/* Titolo della pagina */}
-      <h1 className="text-center mt-5">Recensioni</h1>
+      <div className="text-center"><h1 className="homepage-title">Recensioni</h1></div>   
       <div className="container mt-5">
         <div className="row">
           {/* Mappa le recensioni per creare un rendering diretto */}
@@ -102,6 +107,14 @@ function HomePage() {
           <div className="text-center mt-4">
             <button className="btn btn-primary" onClick={loadMoreReviews}>
               Carica più recensioni
+            </button>
+          </div>
+        )}
+        {/* Pulsante per tornare all'inizio, visibile solo dalla seconda pagina */}
+        {currentPage > 1 && (
+          <div className="text-center mt-4">
+            <button className="btn btn-secondary" onClick={scrollToTop}>
+              Torna all'inizio
             </button>
           </div>
         )}
