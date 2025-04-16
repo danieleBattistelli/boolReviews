@@ -40,7 +40,7 @@ function AppCard({ review, navigate, renderStars }) {
                     <hr />
                     <hr />
                     <button
-                        className="btn btn-primary"
+                        className="btn btn-outline-primary"
                         onClick={() => navigate(`/reviews/${review.id}`)}
                     >
                         Leggi di più

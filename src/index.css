@@ -79,3 +79,10 @@ body {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
     /* Ombra più pronunciata */
 }
+
+.card.hover {
+    transform: translateY(-10px);
+    /* Solleva leggermente la card */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    /* Ombra più pronunciata */
+}

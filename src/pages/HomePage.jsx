@@ -7,6 +7,7 @@ import AppCard from "../components/AppCard";
 function HomePage() {
   // Stato per memorizzare le recensioni ottenute dall'API
   const [reviews, setReviews] = useState([]);
+  // Hook per la navigazione Utilizza useNavigate per navigare tra le pagine
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1); // Stato per la pagina corrente
   const [hasMore, setHasMore] = useState(true); // Stato per verificare se ci sono più pagine
@@ -63,6 +64,11 @@ function HomePage() {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
     getReviews(nextPage);
+
+    // Scorri automaticamente in fondo alla pagina
+    setTimeout(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }, 500); // Ritardo per assicurarsi che le recensioni siano caricate
   };
 
   // Funzione per generare le stelle in base al rating
@@ -86,10 +92,24 @@ function HomePage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleTitleClick = () => {
+    const firstCard = document.querySelector(".card");
+    if (firstCard) {
+      firstCard.classList.add("hover");
+      setTimeout(() => {
+        firstCard.classList.remove("hover"); // Rimuove la classe "hover" dopo 1 secondo
+      }, 1000);
+    }
+  };
+
   return (
     <main className="homepage-main">
       {/* Titolo della pagina */}
-      <div className="text-center"><h1 className="homepage-title">Recensioni</h1></div>   
+      <div className="text-center">
+        <h1 className="homepage-title" onClick={handleTitleClick}>
+          Recensioni
+        </h1>
+      </div>
       <div className="container mt-5">
         <div className="row">
           {/* Mappa le recensioni per creare un rendering diretto */}
@@ -105,7 +125,7 @@ function HomePage() {
         {/* Pulsante per caricare più recensioni */}
         {hasMore && (
           <div className="text-center mt-4">
-            <button className="btn btn-primary" onClick={loadMoreReviews}>
+            <button className="btn btn-outline-primary" onClick={loadMoreReviews}>
               Carica più recensioni
             </button>
           </div>
@@ -113,7 +133,7 @@ function HomePage() {
         {/* Pulsante per tornare all'inizio, visibile solo dalla seconda pagina */}
         {currentPage > 1 && (
           <div className="text-center mt-4">
-            <button className="btn btn-secondary" onClick={scrollToTop}>
+            <button className="btn btn-outline-secondary" onClick={scrollToTop}>
               Torna all'inizio
             </button>
           </div>
