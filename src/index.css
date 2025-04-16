@@ -31,3 +31,21 @@ body {
 .no-margin-bottom {
     margin-bottom: 0;
 }
+
+.fixed-height-title {
+    height: 50px;
+}
+
+.fixed-size-img {
+
+    height: 500px;
+    object-fit: cover;
+    width: 25%;
+    margin: 5px 0;
+
+}
+
+.fixed-height-text {
+    height: 30px;
+    overflow: hidden;
+}

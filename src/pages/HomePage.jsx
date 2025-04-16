@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaStar } from "react-icons/fa"; // Importa l'icona delle stelle
-import AppCard from "../components/AppCard"; // Importa il componente AppCard
+import { FaStar } from "react-icons/fa"; 
+import AppCard from "../components/AppCard"; 
 
 function HomePage() {
   // Stato per memorizzare le recensioni ottenute dall'API
@@ -15,27 +15,46 @@ function HomePage() {
   useEffect(() => {
     // Scorre la pagina verso l'alto all'inizio
     window.scrollTo(0, 0);
+
     // Recupera le recensioni dall'API solo se non sono già state caricate
     if (!isLoading && reviews.length === 0) {
       setIsLoading(true); // Imposta il flag per indicare che i dati stanno per essere caricati
       getReviews();
     }
-  }, []);
+  }, []); // Assicurati che l'array di dipendenze sia vuoto per evitare richiami multipli
 
   // Funzione per ottenere la lista delle recensioni dall'API
   const getReviews = (page = 1) => {
+    if (isLoading) return; // Evita chiamate duplicate
+    setIsLoading(true); // Imposta il flag per indicare che i dati stanno per essere caricati
+
     axios
       .get(`http://127.0.0.1:8000/api/reviews?page=${page}`)
       .then((resp) => {
         const newReviews = resp.data.data.data;
-        setReviews((prevReviews) => [...prevReviews, ...newReviews]); // Aggiungi le nuove recensioni
-        setHasMore(resp.data.data.next_page_url !== null); // Controlla se ci sono più pagine
-        setIsLoading(false); // Reimposta il flag dopo il caricamento
-        console.log(newReviews); // Log dei dati per debug
+
+        // Evita di aggiungere recensioni duplicate
+        setReviews((prevReviews) => {
+          const existingIds = new Set(prevReviews.map((review) => review.id));
+          const filteredReviews = newReviews.filter(
+            (review) => !existingIds.has(review.id)
+          );
+          return [...prevReviews, ...filteredReviews];
+        });
+
+        // Controlla se ci sono più pagine
+        setHasMore(resp.data.data.next_page_url !== null);
+
+        // Reimposta il flag dopo il caricamento
+        setIsLoading(false);
+
+        console.log(newReviews);
       })
       .catch((error) => {
-        setIsLoading(false); // Reimposta il flag in caso di errore
-        console.log("Response get reviews error:", error); // Log degli errori
+        // Reimposta il flag in caso di errore
+        setIsLoading(false);
+
+        console.log("Response get reviews error:", error);
       });
   };
 

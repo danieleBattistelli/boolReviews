@@ -6,17 +6,16 @@ function AppCard({ review, navigate, renderStars }) {
         <div className="col-md-4 mb-4">
             <div className="card h-100">
                 <div className="card-body text-center">
-                    <h3 className="card-title">{review.gametitle}</h3>
+                    <h3 className="card-title fixed-height-title">{review.gametitle}</h3>
                     <img
                         src={`http://127.0.0.1:8000/storage/${review.image}`}
-                        className="card-img-top w-25"
-                        style={{ height: "auto" }}
+                        className="card-img-top fixed-size-img"
                         alt={`${review.gametitle} logo`}
                     />
-                    <p className="card-text">
+                    <p className="card-text fixed-height-text">
                         <strong>{review.genre.name}</strong>
                     </p>
-                    <p className="card-text">
+                    <p className="card-text fixed-height-text">
                         <strong>
                             {review.platforms
                                 .map((platform) => (
@@ -27,7 +26,7 @@ function AppCard({ review, navigate, renderStars }) {
                                 .reduce((prev, curr) => [prev, ", ", curr])}
                         </strong>
                     </p>
-                    <p className="card-text">
+                    <p className="card-text fixed-height-text">
                         <strong>{review.reviewTitle}</strong>
                     </p>
                     <p className="card-text">
@@ -37,6 +36,9 @@ function AppCard({ review, navigate, renderStars }) {
                     <p className="card-text">
                         <strong>{review.reviewerName}</strong>
                     </p>
+                    {/* Aggiungi delle righe per allineare le altezze */}
+                    <hr />
+                    <hr />
                     <button
                         className="btn btn-primary"
                         onClick={() => navigate(`/reviews/${review.id}`)}
