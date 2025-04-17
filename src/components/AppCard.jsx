@@ -3,7 +3,7 @@ import { FaStar } from "react-icons/fa"; // Importa l'icona delle stelle
 // Componente per rappresentare una singola recensione
 function AppCard({ review, navigate, renderStars }) {
     return (
-        <div className="col-md-4 mb-4">
+        <div className="col-12 col-sm-6 col-md-4 mb-4">
             <div className="card h-90">
                 <div className="card-body text-center">
                     <h3 className="card-title fixed-height-title">{review.gametitle}</h3>
@@ -36,9 +36,7 @@ function AppCard({ review, navigate, renderStars }) {
                     <p className="card-text">
                         <strong>{review.reviewerName}</strong>
                     </p>
-                    {/* Aggiungi delle righe per allineare le altezze */}
-                    <hr />
-                    <hr />
+
                     <button
                         className="btn btn-outline-primary"
                         onClick={() => navigate(`/api/reviews/${review.id}`)}

@@ -11,7 +11,7 @@ body {
 }
 
 .navbar {
-    height: 65px;
+    height: 75px;
     margin: 0;
     border: 0;
     /* Altezza fissa della navbar */
@@ -181,4 +181,37 @@ body {
     /* Scritta bianca */
     background-color: #000000;
     /* Sfondo nero */
+}
+
+.dark-mode .review-section {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border-color: #333333;
+}
+
+.dark-mode .section-title {
+    color: #ffffff;
+}
+
+.dark-mode .rating-section {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.dark-mode .reviewer-section {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.dark-mode .detail-page h1 {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.dark-mode-toggle {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin-right: 10px;
+    margin-left: 3px;
 }
