@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"; // Rimuovi useRef
 import { useNavigate, useLocation } from "react-router-dom"; // Importa useLocation per ottenere la query di ricerca
-import { FaStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa"; // Rimuovi FaSpinner
 import AppCard from "../components/AppCard";
 
 function HomePage() {
@@ -12,9 +12,14 @@ function HomePage() {
   const [currentPage, setCurrentPage] = useState(1); // Stato per la pagina corrente
   const [hasMore, setHasMore] = useState(true); // Stato per verificare se ci sono più pagine
   const [isLoading, setIsLoading] = useState(false); // Flag per evitare richieste duplicate
-  const location = useLocation(); // Ottieni la posizione corrente
-  const searchParams = new URLSearchParams(location.search); // Estrai i parametri della query
-  const searchQuery = searchParams.get("search") || ""; // Ottieni la query di ricerca
+  const [isDarkMode, setIsDarkMode] = useState(false); // Stato per il tema scuro
+
+  // Ottieni la posizione corrente
+  const location = useLocation();
+  // Estrai i parametri della query dalla posizione corrente
+  const searchParams = new URLSearchParams(location.search);
+  // Ottieni la query di ricerca
+  const searchQuery = searchParams.get("search") || "";
 
   useEffect(() => {
     // Scorre la pagina verso l'alto all'inizio
@@ -27,8 +32,9 @@ function HomePage() {
     }
   }, []); // Assicurati che l'array di dipendenze sia vuoto per evitare richiami multipli
 
+  // Gestione della query di ricerca
+  // Effettua una nuova ricerca quando la query cambia
   useEffect(() => {
-    // Recupera le recensioni ogni volta che cambia la query di ricerca
     setReviews([]); // Resetta le recensioni per una nuova ricerca
     setCurrentPage(1); // Resetta la pagina corrente
     getReviews(1, searchQuery); // Passa la query di ricerca alla funzione getReviews
@@ -111,6 +117,20 @@ function HomePage() {
       }, 1000);
     }
   };
+
+  // Funzione per attivare/disattivare il tema scuro
+  const toggleDarkMode = () => {
+    setIsDarkMode((prevMode) => !prevMode);
+  };
+
+  useEffect(() => {
+    // Aggiunge o rimuove la classe "dark-mode" al body
+    if (isDarkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }, [isDarkMode]);
 
   return (
     <main className="homepage-main">

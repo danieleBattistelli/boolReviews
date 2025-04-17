@@ -17,6 +17,17 @@ body {
     /* Altezza fissa della navbar */
 }
 
+.navbar .btn-outline-light {
+    margin-left: auto;
+    /* Sposta il pulsante a destra */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar .btn-outline-light:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
 .homepage-container {
     position: relative;
     width: 100%;
@@ -142,4 +153,32 @@ body {
 
 .w-25 {
     width: 25%;
+}
+
+.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.dark-mode .btn {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+.dark-mode .card {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border-color: #333333;
+}
+
+.dark-mode .card-title,
+.dark-mode .card-text {
+    color: #ffffff;
+}
+
+.dark-mode .homepage-title {
+    color: #ffffff;
+    /* Scritta bianca */
+    background-color: #000000;
+    /* Sfondo nero */
 }

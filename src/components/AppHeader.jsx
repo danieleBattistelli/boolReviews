@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 function AppHeader() {
   const [searchText, setSearchText] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(false); // Stato per il tema scuro
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
@@ -11,6 +12,15 @@ function AppHeader() {
     const trimmedSearch = searchText.trim();
     if (trimmedSearch !== "") {
       navigate(`/api/reviews/?search=${encodeURIComponent(trimmedSearch)}`);
+    }
+  };
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((prevMode) => !prevMode);
+    if (!isDarkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
     }
   };
 
@@ -28,7 +38,6 @@ function AppHeader() {
             />
             BoolReviews
           </a>
-          {/* casella di ricerca */}
           <form className="d-flex mx-auto" style={{ width: "50%" }} onSubmit={handleSearch}>
             <input
               className="form-control me-2"
@@ -42,6 +51,13 @@ function AppHeader() {
               Cerca
             </button>
           </form>
+          {/* Pulsante per il tema scuro */}
+          <button
+            className="btn btn-outline-light"
+            onClick={toggleDarkMode}
+          >
+            {isDarkMode ? "Disattiva Tema Scuro" : "Attiva Tema Scuro"}
+          </button>
         </div>
       </nav>
     </header>
