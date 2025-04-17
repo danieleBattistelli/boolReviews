@@ -8,7 +8,10 @@ function AppHeader() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate(`/api/reviews/?search=${encodeURIComponent(searchText)}`);
+    const trimmedSearch = searchText.trim();
+    if (trimmedSearch !== "") {
+      navigate(`/api/reviews/?search=${encodeURIComponent(trimmedSearch)}`);
+    }
   };
 
   return (

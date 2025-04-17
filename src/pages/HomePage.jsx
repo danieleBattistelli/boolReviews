@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom"; // Importa useLocation per ottenere la query di ricerca
 import { FaStar } from "react-icons/fa";
 import AppCard from "../components/AppCard";
 
@@ -12,6 +12,9 @@ function HomePage() {
   const [currentPage, setCurrentPage] = useState(1); // Stato per la pagina corrente
   const [hasMore, setHasMore] = useState(true); // Stato per verificare se ci sono più pagine
   const [isLoading, setIsLoading] = useState(false); // Flag per evitare richieste duplicate
+  const location = useLocation(); // Ottieni la posizione corrente
+  const searchParams = new URLSearchParams(location.search); // Estrai i parametri della query
+  const searchQuery = searchParams.get("search") || ""; // Ottieni la query di ricerca
 
   useEffect(() => {
     // Scorre la pagina verso l'alto all'inizio
@@ -23,6 +26,13 @@ function HomePage() {
       getReviews();
     }
   }, []); // Assicurati che l'array di dipendenze sia vuoto per evitare richiami multipli
+
+  useEffect(() => {
+    // Recupera le recensioni ogni volta che cambia la query di ricerca
+    setReviews([]); // Resetta le recensioni per una nuova ricerca
+    setCurrentPage(1); // Resetta la pagina corrente
+    getReviews(1, searchQuery); // Passa la query di ricerca alla funzione getReviews
+  }, [searchQuery]); // Aggiungi searchQuery come dipendenza
 
   // Funzione per ottenere la lista delle recensioni dall'API
   const getReviews = (page = 1, query = "") => {
@@ -63,7 +73,7 @@ function HomePage() {
   const loadMoreReviews = () => {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
-    getReviews(nextPage);
+    getReviews(nextPage, searchQuery); // Passa la query di ricerca alla funzione getReviews
 
     // Scorri automaticamente in fondo alla pagina
     setTimeout(() => {
