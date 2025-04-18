@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react"; // Rimuovi useRef
 import { useNavigate, useLocation } from "react-router-dom"; // Importa useLocation per ottenere la query di ricerca
-import { FaStar } from "react-icons/fa"; // Rimuovi FaSpinner
+import { FaStar, FaArrowDown, FaArrowUp } from "react-icons/fa"; // Rimuovi FaSpinner
 import AppCard from "../components/AppCard";
 
 function HomePage() {
@@ -133,12 +133,12 @@ function HomePage() {
   }, [isDarkMode]);
 
   return (
-    <main className="homepage-main">
+    <main className="homepage-main container-fluid">
       {/* Titolo della pagina */}
-      <div className="text-center">
-        <h1 className="homepage-title" onClick={handleTitleClick}>
-          Recensioni
-        </h1>
+      <div className="mt-5 mb-4">
+        <div className="display-5" onClick={handleTitleClick}>
+          Le recensioni più recenti:
+        </div>
       </div>
       <div className="container mt-5">
         <div className="row">
@@ -154,19 +154,26 @@ function HomePage() {
         </div>
         {/* Pulsante per caricare più recensioni */}
         {hasMore && (
-          <div className="text-center mt-4">
+          <div className="text-center m-1">
             <button className="btn btn-outline-primary" onClick={loadMoreReviews}>
-              Carica più recensioni
+              <FaArrowDown size={20} /> {/* Icona della freccia */}
             </button>
           </div>
         )}
         {/* Pulsante per tornare all'inizio, visibile solo dalla seconda pagina */}
         {currentPage > 1 && (
-          <div className="text-center mt-4">
-            <button className="btn btn-outline-success" onClick={scrollToTop}>
-              Torna all'inizio
-            </button>
-          </div>
+          <button
+            className="btn btn-outline-success"
+            onClick={scrollToTop}
+            style={{
+              position: "fixed",
+              bottom: "20px",
+              right: "20px",
+              zIndex: 1000,
+            }}
+          >
+            <FaArrowUp size={20} /> {/* Icona della freccia verso l'alto */}
+          </button>
         )}
       </div>
     </main>

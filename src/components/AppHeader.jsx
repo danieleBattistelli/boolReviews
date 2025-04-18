@@ -28,7 +28,7 @@ function AppHeader() {
     <header>
       <nav className="navbar navbar-dark bg-dark fixed-top">
         <div className="container-fluid">
-          <a className="navbar-brand" href="/api/reviews">
+          <a className="navbar-brand d-flex align-items-center" href="/api/reviews">
             <img
               src="/logo.jpg"
               alt="Logo"
@@ -36,7 +36,7 @@ function AppHeader() {
               height="40"
               className="d-inline-block align-text-top"
             />
-            BoolReviews
+            <span className="ms-2 align-middle">BoolReviews</span>
           </a>
           <div className="d-flex ms-auto align-items-center">
             <a className="btn btn-outline-light me-2" href="/news">NEWS</a>

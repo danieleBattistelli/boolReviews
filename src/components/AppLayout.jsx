@@ -6,7 +6,7 @@ function AppLayout() {
         <>
         <AppHeader/>
         <Outlet/>
-        <AppFooter/>
+        {/* <AppFooter/> */}
         </>
     )
 }

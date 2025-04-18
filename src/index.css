@@ -12,14 +12,14 @@ body {
 
 .navbar {
     height: 75px;
-    margin: 0;
+    margin-bottom: 0;
     border: 0;
     /* Altezza fissa della navbar */
 }
 
 .navbar .btn-outline-light {
     margin-left: auto;
-    /* Sposta il pulsante a destra */
+
     transition: background-color 0.3s, color 0.3s;
 }
 
@@ -67,7 +67,7 @@ body {
 }
 
 .fixed-size-img {
-    height: 250px;
+    height: 300px;
     object-fit: contain;
     width: 100%;
     margin: 5px 0;
@@ -208,10 +208,18 @@ body {
     color: #ffffff;
 }
 
+.dark-mode .card-subtitle {
+    color: #ffffff;
+}
+
 .dark-mode-toggle {
     width: 40px;
     height: 40px;
     padding: 0;
     margin-right: 10px;
     margin-left: 3px;
+}
+
+main {
+    margin-top: 80px;
 }
