@@ -41,12 +41,12 @@ function HomePage() {
   }, [searchQuery]); // Aggiungi searchQuery come dipendenza
 
   // Funzione per ottenere la lista delle recensioni dall'API
-  const getReviews = (page = 1, query = "") => {
+  const getReviews = (page = 1, query = "") => { // Rimuovi il parametro genre
     if (isLoading) return; // Evita chiamate duplicate
     setIsLoading(true); // Imposta il flag per indicare che i dati stanno per essere caricati
 
     axios
-      .get(`http://127.0.0.1:8000/api/reviews?page=${page}&search=${query}`)
+      .get(`http://127.0.0.1:8000/api/reviews?page=${page}&search=${query}`) // Rimuovi il parametro genre dall'URL
       .then((resp) => {
         const newReviews = resp.data.data.data;
 

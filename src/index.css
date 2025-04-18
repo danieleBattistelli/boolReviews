@@ -36,7 +36,6 @@ body {
 }
 
 .homepage-title {
-
     margin: 0;
     border: 0;
     color: black;
@@ -62,20 +61,11 @@ body {
     margin-bottom: 0;
 }
 
-.fixed-height-title {
-    height: 50px;
-}
-
 .fixed-size-img {
     height: 300px;
     object-fit: contain;
     width: 100%;
     margin: 5px 0;
-}
-
-.fixed-height-text {
-    height: 30px;
-    overflow: hidden;
 }
 
 .card {
@@ -96,13 +86,6 @@ body {
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    /* Solleva leggermente la card */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-    /* Ombra più pronunciata */
-}
-
-.card.hover {
     transform: translateY(-10px);
     /* Solleva leggermente la card */
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
@@ -171,11 +154,6 @@ body {
     border-color: #333333;
 }
 
-.dark-mode .card-title,
-.dark-mode .card-text {
-    color: #ffffff;
-}
-
 .dark-mode .homepage-title {
     color: #ffffff;
     /* Scritta bianca */
@@ -190,25 +168,6 @@ body {
 }
 
 .dark-mode .section-title {
-    color: #ffffff;
-}
-
-.dark-mode .rating-section {
-    background-color: #1e1e1e;
-    color: #ffffff;
-}
-
-.dark-mode .reviewer-section {
-    background-color: #1e1e1e;
-    color: #ffffff;
-}
-
-.dark-mode .detail-page h1 {
-    background-color: #1e1e1e;
-    color: #ffffff;
-}
-
-.dark-mode .card-subtitle {
     color: #ffffff;
 }
 
