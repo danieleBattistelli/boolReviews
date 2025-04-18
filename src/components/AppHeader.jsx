@@ -4,15 +4,17 @@ import { useNavigate } from 'react-router-dom';
 
 function AppHeader() {
   const [searchText, setSearchText] = useState('');
-  const [isDarkMode, setIsDarkMode] = useState(false); // Stato per il tema scuro
+  const [selectedGenre, setSelectedGenre] = useState(''); // Stato per il filtro del genere
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
     const trimmedSearch = searchText.trim();
-    if (trimmedSearch !== "") {
-      navigate(`/api/reviews/?search=${encodeURIComponent(trimmedSearch)}`);
-    }
+    const genreFilter = selectedGenre ? `genre=${encodeURIComponent(selectedGenre)}` : '';
+    const searchFilter = trimmedSearch ? `search=${encodeURIComponent(trimmedSearch)}` : '';
+    const query = [searchFilter, genreFilter].filter(Boolean).join('&'); // Combina i filtri con "&"
+    navigate(`/api/reviews/?${query}`);
   };
 
   const toggleDarkMode = () => {
@@ -52,6 +54,21 @@ function AppHeader() {
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
               />
+              <select
+                className="form-select me-2"
+                value={selectedGenre}
+                onChange={(e) => setSelectedGenre(e.target.value)}
+              >
+                <option value="">Tutti i generi</option>
+                <option value="Action">Azione</option>
+                <option value="Adventure">Avventura</option>
+                <option value="RPG">Gioco di ruolo</option>
+                <option value="Shooter">Sparatutto</option>
+                <option value="Simulation">Simulazione</option>
+                <option value="Strategy">Strategia</option>
+                <option value="Sports">Sport</option>
+                <option value="Puzzle">Rompicapo</option>
+              </select>
               <button className="btn btn-outline-light d-flex align-items-center justify-content-center" type="submit">
                 <svg
                   className="w-5 h-5 mb-0.5 inline"

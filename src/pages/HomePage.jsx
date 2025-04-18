@@ -13,6 +13,7 @@ function HomePage() {
   const [hasMore, setHasMore] = useState(true); // Stato per verificare se ci sono più pagine
   const [isLoading, setIsLoading] = useState(false); // Flag per evitare richieste duplicate
   const [isDarkMode, setIsDarkMode] = useState(false); // Stato per il tema scuro
+  const [selectedGenre, setSelectedGenre] = useState(""); // Stato per il filtro del genere
 
   // Ottieni la posizione corrente
   const location = useLocation();
@@ -20,6 +21,11 @@ function HomePage() {
   const searchParams = new URLSearchParams(location.search);
   // Ottieni la query di ricerca
   const searchQuery = searchParams.get("search") || "";
+  // Ottieni il genere dalla query string
+  const genreQuery = searchParams.get("genre") || "";
+  useEffect(() => {
+    setSelectedGenre(genreQuery); // Aggiorna il genere selezionato dallo stato della query string
+  }, [genreQuery]);
 
   useEffect(() => {
     // Scorre la pagina verso l'alto all'inizio
@@ -35,18 +41,19 @@ function HomePage() {
   // Gestione della query di ricerca
   // Effettua una nuova ricerca quando la query cambia
   useEffect(() => {
+    setSelectedGenre(genreQuery); // Aggiorna il genere selezionato dallo stato della query string
     setReviews([]); // Resetta le recensioni per una nuova ricerca
     setCurrentPage(1); // Resetta la pagina corrente
-    getReviews(1, searchQuery); // Passa la query di ricerca alla funzione getReviews
-  }, [searchQuery]); // Aggiungi searchQuery come dipendenza
+    getReviews(1, searchQuery, genreQuery); // Passa la query di ricerca e il genere alla funzione getReviews
+  }, [searchQuery, genreQuery]); // Aggiungi genreQuery come dipendenza
 
   // Funzione per ottenere la lista delle recensioni dall'API
-  const getReviews = (page = 1, query = "") => { // Rimuovi il parametro genre
+  const getReviews = (page = 1, query = "", genre = "") => {
     if (isLoading) return; // Evita chiamate duplicate
     setIsLoading(true); // Imposta il flag per indicare che i dati stanno per essere caricati
 
     axios
-      .get(`http://127.0.0.1:8000/api/reviews?page=${page}&search=${query}`) // Rimuovi il parametro genre dall'URL
+      .get(`http://127.0.0.1:8000/api/reviews?page=${page}&search=${query}&genre=${genre}`)
       .then((resp) => {
         const newReviews = resp.data.data.data;
 
@@ -65,13 +72,13 @@ function HomePage() {
         // Reimposta il flag dopo il caricamento
         setIsLoading(false);
 
-        console.log(newReviews);
+        console.log("Recensioni caricate:", newReviews);
       })
       .catch((error) => {
         // Reimposta il flag in caso di errore
         setIsLoading(false);
 
-        console.log("Response get reviews error:", error);
+        console.log("Errore durante il caricamento delle recensioni:", error);
       });
   };
 
@@ -79,7 +86,7 @@ function HomePage() {
   const loadMoreReviews = () => {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
-    getReviews(nextPage, searchQuery); // Passa la query di ricerca alla funzione getReviews
+    getReviews(nextPage, searchQuery, selectedGenre); // Passa la query di ricerca e il genere alla funzione getReviews
 
     // Scorri automaticamente in fondo alla pagina
     setTimeout(() => {
@@ -131,6 +138,13 @@ function HomePage() {
       document.body.classList.remove("dark-mode");
     }
   }, [isDarkMode]);
+
+  // Funzione per aggiornare il filtro del genere
+  const handleGenreChange = (genre) => {
+    setSelectedGenre(genre);
+    const query = `?search=${encodeURIComponent(searchQuery)}&genre=${encodeURIComponent(genre)}`;
+    navigate(`/api/reviews/${query}`); // Aggiorna la query string con il filtro di genere
+  };
 
   return (
     <main className="homepage-main container-fluid">
