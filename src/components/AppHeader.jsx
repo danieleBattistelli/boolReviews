@@ -40,7 +40,7 @@ function AppHeader() {
           </a>
           <div className="d-flex ms-auto align-items-center">
             <a className="btn btn-outline-light me-2" href="/news">NEWS</a>
-            <a className="btn btn-outline-light me-2" href="/recensioni">RECENSIONI</a>
+            <a className="btn btn-outline-light me-2" href="/api/reviews">RECENSIONI</a>
             <a className="btn btn-outline-light me-2" href="/forum">FORUM</a>
             <a className="btn btn-outline-light me-2" href="/social">SOCIAL</a>
             <form className="d-flex me-2" onSubmit={handleSearch}>
