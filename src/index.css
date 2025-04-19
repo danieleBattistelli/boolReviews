@@ -185,3 +185,20 @@ main {
     flex-direction: column;
     justify-content: space-between;
 }
+
+.platform-badge {
+    color: #fff;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.rating-text {
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.dark-mode-text {
+    color: #fff;
+}
