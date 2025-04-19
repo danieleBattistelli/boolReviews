@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function AppHeader() {
   const [searchText, setSearchText] = useState('');
   const [selectedGenre, setSelectedGenre] = useState(''); // Stato per il filtro del genere
+  const [selectedPlatform, setSelectedPlatform] = useState(''); // Stato per il filtro della piattaforma
   const [isDarkMode, setIsDarkMode] = useState(false);
   const navigate = useNavigate();
 
@@ -12,8 +13,9 @@ function AppHeader() {
     e.preventDefault();
     const trimmedSearch = searchText.trim();
     const genreFilter = selectedGenre ? `genre=${encodeURIComponent(selectedGenre)}` : '';
+    const platformFilter = selectedPlatform ? `platform=${encodeURIComponent(selectedPlatform)}` : '';
     const searchFilter = trimmedSearch ? `search=${encodeURIComponent(trimmedSearch)}` : '';
-    const query = [searchFilter, genreFilter].filter(Boolean).join('&'); // Combina i filtri con "&"
+    const query = [searchFilter, genreFilter, platformFilter].filter(Boolean).join('&'); // Combina i filtri con "&"
     navigate(`/api/reviews?${query}`); // Rimuovi lo slash finale
   };
 
@@ -68,6 +70,17 @@ function AppHeader() {
                 <option value="Strategy">Strategia</option>
                 <option value="Sports">Sport</option>
                 <option value="Puzzle">Rompicapo</option>
+              </select>
+              <select
+                className="form-select me-2"
+                value={selectedPlatform}
+                onChange={(e) => setSelectedPlatform(e.target.value)}
+              >
+                <option value="">Tutte le piattaforme</option>
+                <option value="PC">PC</option>
+                <option value="PlayStation">PlayStation</option>
+                <option value="Xbox">Xbox</option>
+                <option value="Nintendo">Nintendo</option>
               </select>
               <button className="btn btn-outline-light d-flex align-items-center justify-content-center" type="submit">
                 <svg

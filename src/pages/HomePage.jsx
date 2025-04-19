@@ -15,6 +15,7 @@ function HomePage() {
   const [isLoading, setIsLoading] = useState(false); // Flag per evitare richieste duplicate
   const [isDarkMode, setIsDarkMode] = useState(false); // Stato per il tema scuro
   const [selectedGenre, setSelectedGenre] = useState(""); // Stato per il filtro del genere
+  const [selectedPlatform, setSelectedPlatform] = useState(""); // Stato per il filtro della piattaforma
 
   // Ottieni la posizione corrente
   const location = useLocation();
@@ -24,9 +25,13 @@ function HomePage() {
   const searchQuery = searchParams.get("search") || "";
   // Ottieni il genere dalla query string
   const genreQuery = searchParams.get("genre") || "";
+  const platformQuery = searchParams.get("platform") || "";
   useEffect(() => {
     setSelectedGenre(genreQuery); // Aggiorna il genere selezionato dallo stato della query string
   }, [genreQuery]);
+  useEffect(() => {
+    setSelectedPlatform(platformQuery); // Aggiorna la piattaforma selezionata dallo stato della query string
+  }, [platformQuery]);
 
   useEffect(() => {
     // Scorre la pagina verso l'alto all'inizio
@@ -45,18 +50,19 @@ function HomePage() {
     setSelectedGenre(genreQuery); // Aggiorna il genere selezionato dallo stato della query string
     setReviews([]); // Resetta le recensioni per una nuova ricerca
     setCurrentPage(1); // Resetta la pagina corrente
-    getReviews(1, searchQuery, genreQuery); // Passa la query di ricerca e il genere alla funzione getReviews
-  }, [searchQuery, genreQuery]); // Aggiungi genreQuery come dipendenza
+    getReviews(1, searchQuery, genreQuery, platformQuery); // Passa la query di ricerca, il genere e la piattaforma alla funzione getReviews
+  }, [searchQuery, genreQuery, platformQuery]); // Aggiungi genreQuery come dipendenza
 
   // Funzione per ottenere la lista delle recensioni dall'API
-  const getReviews = (page = 1, query = "", genre = "") => {
+  const getReviews = (page = 1, query = "", genre = "", platform = "") => {
     if (isLoading) return; // Evita chiamate duplicate
     setIsLoading(true); // Imposta il flag per indicare che i dati stanno per essere caricati
 
     // Costruisci correttamente la query string
     const genreFilter = genre ? `&genre=${encodeURIComponent(genre)}` : "";
+    const platformFilter = platform ? `&platform=${encodeURIComponent(platform)}` : "";
     const searchFilter = query ? `&search=${encodeURIComponent(query)}` : "";
-    const url = `http://127.0.0.1:8000/api/reviews?page=${page}${searchFilter}${genreFilter}`;
+    const url = `http://127.0.0.1:8000/api/reviews?page=${page}${searchFilter}${genreFilter}${platformFilter}`;
 
     axios
       .get(url)
@@ -92,7 +98,7 @@ function HomePage() {
   const loadMoreReviews = () => {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
-    getReviews(nextPage, searchQuery, selectedGenre); // Passa la query di ricerca e il genere alla funzione getReviews
+    getReviews(nextPage, searchQuery, selectedGenre, selectedPlatform); // Passa la piattaforma alla funzione getReviews
 
     // Scorri automaticamente in fondo alla pagina
     setTimeout(() => {
@@ -148,7 +154,7 @@ function HomePage() {
   // Funzione per aggiornare il filtro del genere
   const handleGenreChange = (genre) => {
     setSelectedGenre(genre);
-    const query = `?search=${encodeURIComponent(searchQuery)}&genre=${encodeURIComponent(genre)}`;
+    const query = `?search=${encodeURIComponent(searchQuery)}&genre=${encodeURIComponent(genre)}&platform=${encodeURIComponent(selectedPlatform)}`;
     navigate(`/api/reviews/${query}`); // Aggiorna la query string con il filtro di genere
   };
 
