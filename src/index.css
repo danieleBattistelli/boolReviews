@@ -9,7 +9,7 @@ body {
 }
 
 .navbar {
-    height: 75px;
+    height: 70px;
     margin-bottom: 0;
     border: 0;
 }
@@ -53,12 +53,8 @@ body {
     border-radius: 5px;
 }
 
-.no-margin-bottom {
-    margin-bottom: 0;
-}
-
 .fixed-size-img {
-    height: 200px;
+    height: 250px;
     object-fit: contain;
     width: 100%;
     margin: 5px 0;
@@ -74,8 +70,8 @@ body {
     max-height: 70vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Distribuisce il contenuto */
-    height: 100%; /* Imposta un'altezza uniforme */
+    justify-content: space-between;
+    height: 100%;
 }
 
 .card:hover {
@@ -174,19 +170,18 @@ main {
 
 .fixed-height-title {
     min-height: 50px;
-    /* Imposta un'altezza minima */
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    max-height: 50px; /* Imposta un'altezza massima */
-    overflow: hidden; /* Nasconde il testo in eccesso */
-    text-overflow: ellipsis; /* Aggiunge i puntini di sospensione */
+    max-height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .card-body {
-    flex-grow: 1; /* Permette al contenuto di occupare lo spazio disponibile */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Distribuisce il contenuto */
+    justify-content: space-between;
 }
