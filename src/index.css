@@ -1,7 +1,5 @@
-/* Importa il font da Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-/* Applica il font globalmente */
 body {
     font-family: 'Poppins', sans-serif;
 }
@@ -14,12 +12,10 @@ body {
     height: 75px;
     margin-bottom: 0;
     border: 0;
-    /* Altezza fissa della navbar */
 }
 
 .navbar .btn-outline-light {
     margin-left: auto;
-
     transition: background-color 0.3s, color 0.3s;
 }
 
@@ -62,7 +58,7 @@ body {
 }
 
 .fixed-size-img {
-    height: 300px;
+    height: 200px;
     object-fit: contain;
     width: 100%;
     margin: 5px 0;
@@ -70,26 +66,21 @@ body {
 
 .card {
     background-color: #ffffff;
-    /* Colore di sfondo bianco */
     border-radius: 8px;
-    /* Angoli arrotondati */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* Ombra leggera */
     padding: 10px;
-    /* Spaziatura interna */
     margin: 0 0px 10px 10px;
-    /* Rimosso il margine superiore */
     transition: transform 0.2s, box-shadow 0.2s;
-    /* Transizione per hover */
     max-height: 70vh;
-    /* Altezza massima del 75% della finestra */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuisce il contenuto */
+    height: 100%; /* Imposta un'altezza uniforme */
 }
 
 .card:hover {
     transform: translateY(-10px);
-    /* Solleva leggermente la card */
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-    /* Ombra più pronunciata */
 }
 
 .image-card {
@@ -156,9 +147,7 @@ body {
 
 .dark-mode .homepage-title {
     color: #ffffff;
-    /* Scritta bianca */
     background-color: #000000;
-    /* Sfondo nero */
 }
 
 .dark-mode .review-section {
@@ -180,5 +169,24 @@ body {
 }
 
 main {
-    margin-top: 80px;
+    margin-top: 90px;
+}
+
+.fixed-height-title {
+    min-height: 50px;
+    /* Imposta un'altezza minima */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-height: 50px; /* Imposta un'altezza massima */
+    overflow: hidden; /* Nasconde il testo in eccesso */
+    text-overflow: ellipsis; /* Aggiunge i puntini di sospensione */
+}
+
+.card-body {
+    flex-grow: 1; /* Permette al contenuto di occupare lo spazio disponibile */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuisce il contenuto */
 }

@@ -1,75 +1,67 @@
+// Importa le librerie necessarie
 import axios from "axios";
 import { useEffect, useState } from "react";
-// Importa useLocation per ottenere la query di ricerca
 import { useNavigate, useLocation } from "react-router-dom";
-import { FaStar, FaArrowDown, FaArrowUp } from "react-icons/fa";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import AppCard from "../components/AppCard";
 
+// Definizione del componente HomePage
 function HomePage() {
-  // Stato per memorizzare le recensioni ottenute dall'API
-  const [reviews, setReviews] = useState([]);
-  // Hook per la navigazione Utilizza useNavigate per navigare tra le pagine
-  const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1); // Stato per la pagina corrente
-  const [hasMore, setHasMore] = useState(true); // Stato per verificare se ci sono più pagine
-  const [isLoading, setIsLoading] = useState(false); // Flag per evitare richieste duplicate
-  const [isDarkMode, setIsDarkMode] = useState(false); // Stato per il tema scuro
-  const [selectedGenre, setSelectedGenre] = useState(""); // Stato per il filtro del genere
-  const [selectedPlatform, setSelectedPlatform] = useState(""); // Stato per il filtro della piattaforma
 
-  // Ottieni la posizione corrente
+  // Stati per gestire i dati e il comportamento della pagina
+  const [reviews, setReviews] = useState([]);
+  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [selectedPlatform, setSelectedPlatform] = useState("");
+
   const location = useLocation();
-  // Estrai i parametri della query dalla posizione corrente
   const searchParams = new URLSearchParams(location.search);
-  // Ottieni la query di ricerca
   const searchQuery = searchParams.get("search") || "";
-  // Ottieni il genere dalla query string
   const genreQuery = searchParams.get("genre") || "";
   const platformQuery = searchParams.get("platform") || "";
   useEffect(() => {
-    setSelectedGenre(genreQuery); // Aggiorna il genere selezionato dallo stato della query string
+    setSelectedGenre(genreQuery);
   }, [genreQuery]);
   useEffect(() => {
-    setSelectedPlatform(platformQuery); // Aggiorna la piattaforma selezionata dallo stato della query string
+    setSelectedPlatform(platformQuery);
   }, [platformQuery]);
 
   useEffect(() => {
-    // Scorre la pagina verso l'alto all'inizio
     window.scrollTo(0, 0);
-
-    // Recupera le recensioni dall'API solo se non sono già state caricate
     if (!isLoading && reviews.length === 0) {
-      setIsLoading(true); // Imposta il flag per indicare che i dati stanno per essere caricati
+      setIsLoading(true);
       getReviews();
     }
-  }, []); // Assicurati che l'array di dipendenze sia vuoto per evitare richiami multipli
+  }, []);
 
-  // Gestione della query di ricerca
-  // Effettua una nuova ricerca quando la query cambia
   useEffect(() => {
-    setSelectedGenre(genreQuery); // Aggiorna il genere selezionato dallo stato della query string
-    setReviews([]); // Resetta le recensioni per una nuova ricerca
-    setCurrentPage(1); // Resetta la pagina corrente
-    getReviews(1, searchQuery, genreQuery, platformQuery); // Passa la query di ricerca, il genere e la piattaforma alla funzione getReviews
-  }, [searchQuery, genreQuery, platformQuery]); // Aggiungi genreQuery come dipendenza
+    setSelectedGenre(genreQuery);
+    setReviews([]);
+    setCurrentPage(1);
+    getReviews(1, searchQuery, genreQuery, platformQuery);
+  }, [searchQuery, genreQuery, platformQuery]);
 
-  // Funzione per ottenere la lista delle recensioni dall'API
+  // Funzione per ottenere le recensioni dal server
   const getReviews = (page = 1, query = "", genre = "", platform = "") => {
-    if (isLoading) return; // Evita chiamate duplicate
-    setIsLoading(true); // Imposta il flag per indicare che i dati stanno per essere caricati
+    if (isLoading) return;
+    setIsLoading(true);
 
-    // Costruisci correttamente la query string
+    // Costruisce l'URL con i filtri
     const genreFilter = genre ? `&genre=${encodeURIComponent(genre)}` : "";
     const platformFilter = platform ? `&platform=${encodeURIComponent(platform)}` : "";
     const searchFilter = query ? `&search=${encodeURIComponent(query)}` : "";
     const url = `http://127.0.0.1:8000/api/reviews?page=${page}${searchFilter}${genreFilter}${platformFilter}`;
 
+    // Effettua la richiesta HTTP
     axios
       .get(url)
       .then((resp) => {
         const newReviews = resp.data.data.data;
 
-        // Evita di aggiungere recensioni duplicate
+        // Aggiorna lo stato con le nuove recensioni
         setReviews((prevReviews) => {
           const existingIds = new Set(prevReviews.map((review) => review.id));
           const filteredReviews = newReviews.filter(
@@ -78,115 +70,65 @@ function HomePage() {
           return [...prevReviews, ...filteredReviews];
         });
 
-        // Controlla se ci sono più pagine
+        // Aggiorna lo stato per indicare se ci sono altre recensioni
         setHasMore(resp.data.data.next_page_url !== null);
-
-        // Reimposta il flag dopo il caricamento
         setIsLoading(false);
-
-        console.log("Recensioni caricate:", newReviews);
       })
       .catch((error) => {
-        // Reimposta il flag in caso di errore
         setIsLoading(false);
-
-        console.log("Errore durante il caricamento delle recensioni:", error);
       });
   };
 
-  // Funzione per caricare più recensioni
+  // Funzione per caricare altre recensioni
   const loadMoreReviews = () => {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
-    getReviews(nextPage, searchQuery, selectedGenre, selectedPlatform); // Passa la piattaforma alla funzione getReviews
+    getReviews(nextPage, searchQuery, selectedGenre, selectedPlatform);
 
-    // Scorri automaticamente in fondo alla pagina
+    // Scorre verso il basso dopo un breve ritardo
     setTimeout(() => {
       window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-    }, 500); // Ritardo per assicurarsi che le recensioni siano caricate
+    }, 500);
   };
 
-  // Funzione per generare le stelle in base al rating
-  const renderStars = (rating) => {
-    const normalizedRating = Math.round((rating / 10) * 5); // Normalizza il rating su una scala da 1 a 5
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      stars.push(
-        <FaStar
-          key={i}
-          color={i < normalizedRating ? "gold" : "lightgray"} // Stelle piene o vuote basate sul rating normalizzato
-          size={20}
-        />
-      );
-    }
-    return stars;
-  };
-
-  // Funzione per scorrere verso l'alto
+  // Funzione per tornare in cima alla pagina
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleTitleClick = () => {
-    const firstCard = document.querySelector(".card");
-    if (firstCard) {
-      firstCard.classList.add("hover");
-      setTimeout(() => {
-        firstCard.classList.remove("hover"); // Rimuove la classe "hover" dopo 1 secondo
-      }, 1000);
-    }
-  };
 
-  // Funzione per attivare/disattivare il tema scuro
-  const toggleDarkMode = () => {
-    setIsDarkMode((prevMode) => !prevMode);
-  };
-
-  useEffect(() => {
-    // Aggiunge o rimuove la classe "dark-mode" al body
-    if (isDarkMode) {
-      document.body.classList.add("dark-mode");
-    } else {
-      document.body.classList.remove("dark-mode");
-    }
-  }, [isDarkMode]);
-
-  // Funzione per aggiornare il filtro del genere
-  const handleGenreChange = (genre) => {
-    setSelectedGenre(genre);
-    const query = `?search=${encodeURIComponent(searchQuery)}&genre=${encodeURIComponent(genre)}&platform=${encodeURIComponent(selectedPlatform)}`;
-    navigate(`/api/reviews/${query}`); // Aggiorna la query string con il filtro di genere
-  };
-
+  // Ritorna il layout della pagina Home
   return (
     <main className="homepage-main container-fluid">
-      {/* Titolo della pagina */}
       <div className="mt-5 mb-4">
-        <div className="display-5" onClick={handleTitleClick}>
+        <div className="display-5">
           Le recensioni più recenti:
         </div>
       </div>
+
       <div className="container mt-5">
         <div className="row">
-          {/* Mappa le recensioni per creare un rendering diretto */}
+          {/* Mappa le recensioni in AppCard */}
           {reviews.map((review) => (
             <AppCard
               key={review.id}
               review={review}
               navigate={navigate}
-              renderStars={renderStars}
+
             />
           ))}
         </div>
-        {/* Pulsante per caricare più recensioni */}
+
+        {/* Bottone per caricare altre recensioni */}
         {hasMore && (
           <div className="text-center m-1">
             <button className="btn btn-outline-primary" onClick={loadMoreReviews}>
-              <FaArrowDown size={20} /> {/* Icona della freccia */}
+              <FaArrowDown size={20} />
             </button>
           </div>
         )}
-        {/* Pulsante per tornare all'inizio, visibile solo dalla seconda pagina */}
+
+        {/* Bottone per tornare in cima */}
         {currentPage > 1 && (
           <button
             className="btn btn-outline-success"
@@ -198,7 +140,7 @@ function HomePage() {
               zIndex: 1000,
             }}
           >
-            <FaArrowUp size={20} /> {/* Icona della freccia verso l'alto */}
+            <FaArrowUp size={20} />
           </button>
         )}
       </div>
@@ -206,4 +148,5 @@ function HomePage() {
   );
 }
 
+// Esporta il componente per l'utilizzo in altre parti dell'applicazione
 export default HomePage;

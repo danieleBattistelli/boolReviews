@@ -1,4 +1,3 @@
-import { FaStar, FaArrowDown, FaArrowRight } from "react-icons/fa"; // Importa l'icona delle stelle e della freccia
 
 // Funzione per calcolare i giorni dalla data fornita
 function calculateDaysFromToday(dateString) {
@@ -9,7 +8,7 @@ function calculateDaysFromToday(dateString) {
 }
 
 // Componente per rappresentare una singola recensione
-function AppCard({ review, navigate, renderStars }) {
+function AppCard({ review, navigate }) {
     return (
         <div className="col-12 col-sm-6 col-md-4 mb-4">
             <div className="card h-90">
@@ -22,18 +21,17 @@ function AppCard({ review, navigate, renderStars }) {
                     </strong>
                     <img
                         src={`http://127.0.0.1:8000/storage/${review.image}`}
-                        className="card-img-top fixed-size-img mb-3"
+                        className="card-img-top fixed-size-img mb-4"
                         alt={`${review.gametitle} logo`}
+                        // Aggiunto onClick per navigare alla pagina della recensione
+                        onClick={() => navigate(`/api/reviews/${review.id}`)}
+                        // Aggiunto stile per indicare che è cliccabile
+                        style={{ cursor: "pointer" }}
                     />
-                    <h3 className="card-text fixed-height-text">
+
+                    <h3 className="card-text fixed-height-title">
                         <strong>{review.reviewTitle}</strong>
                     </h3>
-                    <button
-                        className="btn btn-outline-primary"
-                        onClick={() => navigate(`/api/reviews/${review.id}`)}
-                    >
-                        <FaArrowRight size={20} /> {/* Icona della freccia */}
-                    </button>
                 </div>
             </div>
         </div>

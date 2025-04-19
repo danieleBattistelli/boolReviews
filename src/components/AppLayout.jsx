@@ -4,9 +4,8 @@ import AppFooter from "./AppFooter";
 function AppLayout() {
     return (
         <>
-        <AppHeader/>
-        <Outlet/>
-        {/* <AppFooter/> */}
+            <AppHeader />
+            <Outlet />
         </>
     )
 }
