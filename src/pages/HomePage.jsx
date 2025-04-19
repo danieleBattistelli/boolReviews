@@ -1,7 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react"; // Rimuovi useRef
-import { useNavigate, useLocation } from "react-router-dom"; // Importa useLocation per ottenere la query di ricerca
-import { FaStar, FaArrowDown, FaArrowUp } from "react-icons/fa"; // Rimuovi FaSpinner
+import { useEffect, useState } from "react";
+// Importa useLocation per ottenere la query di ricerca
+import { useNavigate, useLocation } from "react-router-dom";
+import { FaStar, FaArrowDown, FaArrowUp } from "react-icons/fa";
 import AppCard from "../components/AppCard";
 
 function HomePage() {
@@ -52,8 +53,13 @@ function HomePage() {
     if (isLoading) return; // Evita chiamate duplicate
     setIsLoading(true); // Imposta il flag per indicare che i dati stanno per essere caricati
 
+    // Costruisci correttamente la query string
+    const genreFilter = genre ? `&genre=${encodeURIComponent(genre)}` : "";
+    const searchFilter = query ? `&search=${encodeURIComponent(query)}` : "";
+    const url = `http://127.0.0.1:8000/api/reviews?page=${page}${searchFilter}${genreFilter}`;
+
     axios
-      .get(`http://127.0.0.1:8000/api/reviews?page=${page}&search=${query}&genre=${genre}`)
+      .get(url)
       .then((resp) => {
         const newReviews = resp.data.data.data;
 
