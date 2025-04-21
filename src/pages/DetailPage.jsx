@@ -79,9 +79,8 @@ function DetailPage() {
             <img
               src={`http://127.0.0.1:8000/storage/${detail.image}`}
               alt={detail.gametitle}
-              className="img-fluid"
+              className="img-fluid clickable-image" // Aggiunta classe CSS
               onClick={openModal} // Aggiunto evento onClick
-              style={{ cursor: "pointer" }} // Aggiunto stile per il cursore
             />
           </div>
         </div>
@@ -100,7 +99,7 @@ function DetailPage() {
           <img
             src={`http://127.0.0.1:8000/storage/${detail.image}`}
             alt={detail.gametitle}
-            className="img-fluid"
+            className="img-fluid full-screen-image" // Aggiunta classe CSS
           />
         </ReactModal>
 

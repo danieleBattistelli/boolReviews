@@ -9,18 +9,32 @@ import AppCard from "../components/AppCard";
 function HomePage() {
 
   // Stati per gestire i dati e il comportamento della pagina
-  const [reviews, setReviews] = useState([]);
-  const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedGenre, setSelectedGenre] = useState("");
-  const [selectedPlatform, setSelectedPlatform] = useState("");
 
+  // Stato per memorizzare le recensioni
+  const [reviews, setReviews] = useState([]);
+  // Stato per gestire la navigazione
+  const navigate = useNavigate();
+  // Stato per gestire la pagina corrente
+  const [currentPage, setCurrentPage] = useState(1);
+  // Stato per gestire se ci sono più recensioni da caricare
+  const [hasMore, setHasMore] = useState(true);
+  // Stato per gestire il caricamento delle recensioni
+  const [isLoading, setIsLoading] = useState(false);
+  // Stato per gestire il filtro per genere
+  const [selectedGenre, setSelectedGenre] = useState("");
+  // Stato per gestire il filtro per piattaforma
+  const [selectedPlatform, setSelectedPlatform] = useState("");
+ 
+  // Ottieni la posizione corrente per i parametri di ricerca
   const location = useLocation();
+  // Ottieni i parametri di ricerca dalla URL
   const searchParams = new URLSearchParams(location.search);
+  // Ottieni i valori dei parametri di ricerca
   const searchQuery = searchParams.get("search") || "";
+  // Imposta i valori iniziali per i filtri di ricerca
   const genreQuery = searchParams.get("genre") || "";
+
+  // Imposta i valori iniziali per i filtri di ricerca
   const platformQuery = searchParams.get("platform") || "";
   useEffect(() => {
     setSelectedGenre(genreQuery);
@@ -37,6 +51,7 @@ function HomePage() {
     }
   }, []);
 
+  // Effettua il caricamento delle recensioni quando i parametri di ricerca cambiano
   useEffect(() => {
     setSelectedGenre(genreQuery);
     setReviews([]);
@@ -49,7 +64,7 @@ function HomePage() {
     if (isLoading) return;
     setIsLoading(true);
 
-    // Costruisce l'URL con i filtri
+    // Costruisce l'URL per la richiesta HTTP
     const genreFilter = genre ? `&genre=${encodeURIComponent(genre)}` : "";
     const platformFilter = platform ? `&platform=${encodeURIComponent(platform)}` : "";
     const searchFilter = query ? `&search=${encodeURIComponent(query)}` : "";

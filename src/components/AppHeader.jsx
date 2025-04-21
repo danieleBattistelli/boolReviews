@@ -5,6 +5,7 @@ import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 
 function AppHeader() {
+
   // Stato per il testo di ricerca
   const [searchText, setSearchText] = useState('');
 
@@ -112,10 +113,12 @@ function AppHeader() {
 
   return (
     <>
+
       {/* Header con barra di navigazione */}
       <header>
         <nav className="navbar navbar-dark bg-dark fixed-top">
           <div className="container-fluid">
+
             {/* Logo e nome del sito */}
             <a className="navbar-brand d-flex align-items-center" href="/api/reviews">
               <img
@@ -145,6 +148,8 @@ function AppHeader() {
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
                 />
+
+                {/* Selezione del genere */}
                 <select
                   className="form-select me-2"
                   value={selectedGenre}
@@ -159,6 +164,7 @@ function AppHeader() {
                   <option value="Strategy">Strategia</option>
                   <option value="Sports">Sport</option>
                   <option value="Puzzle">Rompicapo</option>
+                  <option value="Racing">Di Guida</option>
                 </select>
                 <select
                   className="form-select me-2"
@@ -220,6 +226,7 @@ function AppHeader() {
           </div>
         </nav>
       </header>
+
 
       {/* Modal per il login */}
       <Modal show={showLoginModal} onHide={handleLoginModalClose} centered>
