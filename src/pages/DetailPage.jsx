@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import ReactModal from "react-modal";
 
 // Importazione delle librerie necessarie
 
@@ -19,6 +20,15 @@ function DetailPage() {
 
   // Stato per la modalità scura
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Stato per gestire la visibilità della modale
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Funzione per aprire la modale
+  const openModal = () => setIsModalOpen(true);
+
+  // Funzione per chiudere la modale
+  const closeModal = () => setIsModalOpen(false);
 
   // Funzione per formattare la data
   const formatDate = (dateString) => {
@@ -70,9 +80,29 @@ function DetailPage() {
               src={`http://127.0.0.1:8000/storage/${detail.image}`}
               alt={detail.gametitle}
               className="img-fluid"
+              onClick={openModal} // Aggiunto evento onClick
+              style={{ cursor: "pointer" }} // Aggiunto stile per il cursore
             />
           </div>
         </div>
+
+        {/* Modale per visualizzare l'immagine a tutto schermo */}
+        <ReactModal
+          isOpen={isModalOpen}
+          onRequestClose={closeModal}
+          className="image-modal"
+          overlayClassName="image-modal-overlay"
+          ariaHideApp={false}
+        >
+          <button className="close-modal-btn" onClick={closeModal}>
+            &times;
+          </button>
+          <img
+            src={`http://127.0.0.1:8000/storage/${detail.image}`}
+            alt={detail.gametitle}
+            className="img-fluid"
+          />
+        </ReactModal>
 
         {/* Sezione del genere */}
         <div className="review-section">
