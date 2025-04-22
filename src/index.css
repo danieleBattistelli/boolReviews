@@ -164,12 +164,12 @@ main {
 }
 
 .fixed-height-title {
-    min-height: 50px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    max-height: 50px;
+    
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -255,4 +255,32 @@ main {
 .full-screen-image {
     width: 100%;
     height: 100%;
+}
+
+.homepage-main {
+    margin-top: 90px;
+}
+
+.homepage-main .display-5 {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.homepage-main .btn-outline-primary {
+    margin: 10px 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.homepage-main .btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.homepage-main .btn-outline-success {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.homepage-main .btn-outline-success:hover {
+    background-color: #28a745;
+    color: #ffffff;
 }

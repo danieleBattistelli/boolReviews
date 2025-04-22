@@ -1,4 +1,3 @@
-// Importa le librerie necessarie
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -24,7 +23,7 @@ function HomePage() {
   const [selectedGenre, setSelectedGenre] = useState("");
   // Stato per gestire il filtro per piattaforma
   const [selectedPlatform, setSelectedPlatform] = useState("");
- 
+
   // Ottieni la posizione corrente per i parametri di ricerca
   const location = useLocation();
   // Ottieni i parametri di ricerca dalla URL
@@ -69,6 +68,9 @@ function HomePage() {
     const platformFilter = platform ? `&platform=${encodeURIComponent(platform)}` : "";
     const searchFilter = query ? `&search=${encodeURIComponent(query)}` : "";
     const url = `http://127.0.0.1:8000/api/reviews?page=${page}${searchFilter}${genreFilter}${platformFilter}`;
+
+    // Log dell'URL generato per debug
+    console.log("Generated URL:", url);
 
     // Effettua la richiesta HTTP
     axios
@@ -129,7 +131,6 @@ function HomePage() {
               key={review.id}
               review={review}
               navigate={navigate}
-
             />
           ))}
         </div>
@@ -148,12 +149,6 @@ function HomePage() {
           <button
             className="btn btn-outline-success"
             onClick={scrollToTop}
-            style={{
-              position: "fixed",
-              bottom: "20px",
-              right: "20px",
-              zIndex: 1000,
-            }}
           >
             <FaArrowUp size={20} />
           </button>
